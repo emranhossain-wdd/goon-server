@@ -32,8 +32,16 @@ async function run() {
         // get all products
         app.get('/blogs', async (req, res) => {
             const cursor = blogs.find({});
-            const allBlogs = await cursor.toArray();
+            const page = parseInt(req.query.page);
+            const size = parseInt(req.query.size);
             const count = await cursor.count()
+            let allBlogs;
+            if (page) {
+                allBlogs = await cursor.skip(page * size).limit(size).toArray();
+            }
+            else {
+                allBlogs = await cursor.toArray();
+            }
             res.json({
                 count,
                 allBlogs
