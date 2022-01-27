@@ -30,9 +30,9 @@ async function run() {
         });
 
         // get all products
-        app.get('/explore', async (req, res) => {
-            const allProducts = await blogs.find({}).toArray();
-            res.json(allProducts);
+        app.get('/blogs', async (req, res) => {
+            const allBlogs = await blogs.find({}).toArray();
+            res.json(allBlogs);
         });
 
         // single product rendering
