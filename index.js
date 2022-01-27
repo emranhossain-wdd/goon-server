@@ -22,14 +22,14 @@ async function run() {
         const orders = database.collection('orders');
         const reviews = database.collection('reviews');
 
-        // rendering for home
+        // rendering all blogs
         app.get('/topBlogs', async (req, res) => {
             const cursor = blogs.find({});
             const topBlogs = await cursor.toArray();
             res.json(topBlogs);
         });
 
-        // get all products
+        // rendering blogs by page
         app.get('/blogs', async (req, res) => {
             const cursor = blogs.find({});
             const page = req.query.page;
@@ -56,25 +56,13 @@ async function run() {
             res.json(blog);
         });
 
-        // get all orders
-        app.get('/order', async (req, res) => {
-            const allOrders = await orders.find({}).toArray();
-            res.json(allOrders);
-        });
-
-        // my orders rendering by email
+        // my blogs rendering by email
         app.get('/myBlogs', async (req, res) => {
             const email = req.query.email;
             const query = { email: email };
             const result = await blogs.find(query).toArray();
             res.json(result);
         })
-
-        // get all reviews
-        app.get('/review', async (req, res) => {
-            const result = await reviews.find({}).toArray();
-            res.json(result);
-        });
 
         // check admin
         app.get('/users', async (req, res) => {
@@ -88,7 +76,7 @@ async function run() {
             res.json({ admin: isAdmin });
         })
 
-        // all products added in database
+        // all blogs added in database
         app.post('/blogs', async (req, res) => {
             const blog = req.body;
             const result = await blogs.insertOne(blog);
@@ -101,21 +89,7 @@ async function run() {
             const result = await users.insertOne(user);
         });
 
-        // order added in database
-        app.post('/order', async (req, res) => {
-            const order = req.body;
-            const result = await orders.insertOne(order);
-            res.json(result);
-        });
-
-        // review added in database
-        app.post('/review', async (req, res) => {
-            const review = req.body;
-            const result = await reviews.insertOne(review);
-            res.json(result);
-        });
-
-        // delivery status update
+        // blog status update
         app.put('/status/:id', async (req, res) => {
             const id = req.params.id;
             const updateStatus = req.body;
@@ -126,7 +100,7 @@ async function run() {
                     status: updateStatus.status
                 },
             };
-            const result = await orders.updateOne(query, updateDoc, options);
+            const result = await blogs.updateOne(query, updateDoc, options);
             res.json(result);
         })
         // make an admin
@@ -142,15 +116,7 @@ async function run() {
             res.json(result);
         });
 
-        // delete a particular order
-        app.delete('/blog/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await blogs.deleteOne(query);
-            res.json(result);
-        });
-
-        // delete a particular product
+        // delete a particular blog
         app.delete('/blog/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
