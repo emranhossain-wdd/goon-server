@@ -63,10 +63,10 @@ async function run() {
         });
 
         // my orders rendering by email
-        app.get('/myOrder', async (req, res) => {
+        app.get('/myBlogs', async (req, res) => {
             const email = req.query.email;
             const query = { email: email };
-            const result = await orders.find(query).toArray();
+            const result = await blogs.find(query).toArray();
             res.json(result);
         })
 
@@ -143,15 +143,15 @@ async function run() {
         });
 
         // delete a particular order
-        app.delete('/order/:id', async (req, res) => {
+        app.delete('/blog/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await orders.deleteOne(query);
+            const result = await blogs.deleteOne(query);
             res.json(result);
         });
 
         // delete a particular product
-        app.delete('/product/:id', async (req, res) => {
+        app.delete('/blog/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await blogs.deleteOne(query);
