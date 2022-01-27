@@ -32,7 +32,7 @@ async function run() {
         // get all products
         app.get('/blogs', async (req, res) => {
             const cursor = blogs.find({});
-            const page = parseInt(req.query.page);
+            const page = req.query.page;
             const size = parseInt(req.query.size);
             const count = await cursor.count()
             let allBlogs;
