@@ -23,10 +23,10 @@ async function run() {
         const reviews = database.collection('reviews');
 
         // rendering for home
-        app.get('/home', async (req, res) => {
-            const cursor = blogs.find({}).limit(6);
-            const homeProducts = await cursor.toArray();
-            res.json(homeProducts);
+        app.get('/topBlogs', async (req, res) => {
+            const cursor = blogs.find({});
+            const topBlogs = await cursor.toArray();
+            res.json(topBlogs);
         });
 
         // get all products
