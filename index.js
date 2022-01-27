@@ -17,21 +17,21 @@ async function run() {
     try {
         await client.connect();
         const database = client.db('goon');
-        const products = database.collection('blogs');
+        const blogs = database.collection('blogs');
         const users = database.collection('users');
         const orders = database.collection('orders');
         const reviews = database.collection('reviews');
 
         // rendering for home
         app.get('/home', async (req, res) => {
-            const cursor = products.find({}).limit(6);
+            const cursor = blogs.find({}).limit(6);
             const homeProducts = await cursor.toArray();
             res.json(homeProducts);
         });
 
         // get all products
         app.get('/explore', async (req, res) => {
-            const allProducts = await products.find({}).toArray();
+            const allProducts = await blogs.find({}).toArray();
             res.json(allProducts);
         });
 
@@ -39,7 +39,7 @@ async function run() {
         app.get('/order/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const product = await products.findOne(query);
+            const product = await blogs.findOne(query);
             res.json(product);
         });
 
@@ -76,9 +76,9 @@ async function run() {
         })
 
         // all products added in database
-        app.post('/products', async (req, res) => {
-            const product = req.body;
-            const result = await products.insertOne(product);
+        app.post('/blogs', async (req, res) => {
+            const blog = req.body;
+            const result = await blogs.insertOne(blog);
             res.json(result);
         });
 
@@ -141,7 +141,7 @@ async function run() {
         app.delete('/product/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await products.deleteOne(query);
+            const result = await blogs.deleteOne(query);
             res.json(result);
         });
 
