@@ -31,9 +31,9 @@ async function run() {
 
         // get all products
         app.get('/blogs', async (req, res) => {
-            const cursor = await blogs.find({});
-            const allBlogs = cursor.toArray();
-            const count = cursor.count()
+            const cursor = blogs.find({});
+            const allBlogs = await cursor.toArray();
+            const count = await cursor.count()
             res.json({
                 count,
                 allBlogs
