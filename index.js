@@ -48,12 +48,12 @@ async function run() {
             });
         });
 
-        // single product rendering
-        app.get('/order/:id', async (req, res) => {
+        // single blog rendering
+        app.get('/blog/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const product = await blogs.findOne(query);
-            res.json(product);
+            const blog = await blogs.findOne(query);
+            res.json(blog);
         });
 
         // get all orders
